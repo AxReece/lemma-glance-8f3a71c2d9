@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en" class="js">
+<head>
+<noscript><style>.hero h1{visibility:visible!important}.reveal{opacity:1!important;transform:none!important}</style></noscript>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lemma: The Sandbox for Scientists</title>
+<meta name="description" content="Lemma: The Sandbox for Scientists. Run scientific work in the browser, choose the model for the task, and direct and inspect the work. Verifiable AI for science and engineering, by Axiomatic AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#020618; --ink-2:#314158; --muted:#62748e; --soft:#f7f4ec; --paper:#fcfaf7; --card:#ffffff; --mint:#f1fce9; --mint-2:#dff8cf;
+  --night:#0e4322; --night-deep:#072615; --night-text:#d9e3d4;
+  --green:#77d645; --green-ink:#0a8122;
+  --sans:Inter,'Helvetica Neue',Arial,sans-serif; --serif:'STIX Two Text',Georgia,'Times New Roman',serif; --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  /* type scale: display / h2 / h3 / lead / body / small */
+  --fs-display:clamp(44px,6.4vw,88px); --fs-h2:clamp(34px,4.2vw,52px); --fs-h3:clamp(26px,2.5vw,32px); --fs-h4:22px; --fs-lead:20px; --fs-body:17px; --fs-small:15px; --fs-label:13px;
+  --sec:128px; --gap-head:16px; --gap-para:20px;
+  /* radii: cards / elements inside cards */
+  --r:20px; --r-in:12px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html.lenis-on{scroll-behavior:auto}
+.lenis.lenis-smooth{scroll-behavior:auto}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:var(--fs-body);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.wordmark{font-weight:300;letter-spacing:-.04em}
+.eyebrow{font-family:var(--mono);font-size:var(--fs-label);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--green-ink);line-height:1.4}
+h1,h2,h3{font-weight:400;margin:0;letter-spacing:-.025em}
+h2,h3{text-wrap:balance}
+p{text-wrap:pretty}
+em.gi{font-family:var(--serif);font-style:italic;color:var(--green-ink);letter-spacing:-.01em}
+
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:15px 26px;border-radius:999px;font-weight:600;font-size:var(--fs-small);text-decoration:none;transition:transform .15s,background .15s,color .15s;line-height:1.2}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--night);color:#fff}
+.btn.primary:hover{background:var(--green-ink)}
+.btn.line{background:var(--card);color:var(--ink)}
+.btn.line:hover{background:var(--mint-2)}
+.btn.green{background:#c1f1a5;color:var(--night)}
+.btn.green:hover{background:#9be571}
+.btn.ghost{background:rgba(255,255,255,.12);color:#fff}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+.btn.sm{padding:11px 20px}
+
+/* ---------- nav + hero (dark banner, film on the right) ---------- */
+.hero{position:relative;background:var(--paper);color:var(--ink)}
+.hero .wrap{position:relative;z-index:2}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+.nav .nav-cta{order:2;padding:12px 22px;transition-property:background,color} /* GSAP owns transform here; a CSS transition on it makes the entrance tween land 12px high */
+.brand{display:flex;align-items:center;gap:16px}
+.brand img{height:30px;display:block}
+.brand-tag{font-family:var(--mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.nav-links{display:flex;align-items:center;gap:28px;font-size:var(--fs-small)}
+.nav-links a{text-decoration:none;color:rgba(255,255,255,.8)}
+.nav-links a:hover{color:#fff}
+.nav-links .btn.line{background:transparent;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
+.nav-links .btn.line:hover{background:rgba(255,255,255,.1)}
+.hero-body{padding:16px 0 36px;max-width:900px}
+.hero-top{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.hero .lemma{display:inline-block;font-family:var(--sans);font-weight:300;letter-spacing:-.045em;font-size:var(--fs-h3);line-height:1;color:var(--ink);text-decoration:none}
+.hero .lemma:hover{color:var(--green-ink)}
+.hero .eyebrow{color:var(--green-ink)}
+.hero h1{font-family:var(--serif);font-weight:500;letter-spacing:-.015em;font-size:clamp(44px,5.8vw,76px);line-height:1;margin:0}
+.hero h1 em.gi{color:var(--green-ink);font-weight:400}
+.hero h1 .w{display:inline-block}
+@media (prefers-reduced-motion:no-preference){.js .hero h1{visibility:hidden}}
+.hero p.lead{font-size:var(--fs-body);color:var(--night-text);margin:0 0 20px;max-width:480px}
+.hero .btn.primary{background:var(--night);color:#fff}
+.hero .btn.primary:hover{background:var(--green-ink)}
+
+/* ---------- the run (the Plan & verify film) ---------- */
+.run{padding-top:0;padding-bottom:0}
+.run .frame{border-radius:var(--r);overflow:hidden;background:var(--night-deep);aspect-ratio:16/9}
+.run video{width:100%;height:100%;object-fit:cover;display:block}
+.run .cap{display:inline-flex;align-items:center;gap:10px;margin:0 0 14px;color:var(--ink-2);font-family:var(--mono);font-size:var(--fs-label);letter-spacing:.04em;text-transform:uppercase}
+.run .cap .dot{width:8px;height:8px;border-radius:50%;background:var(--green-ink)}
+
+/* ---------- evidence ---------- */
+.ev{margin-top:72px;background:var(--night-deep);color:#fff;border-radius:var(--r);padding:48px 56px 40px}
+.ev .eyebrow{color:var(--green)}
+.ev h3{font-size:var(--fs-h3);line-height:1.15;margin:var(--gap-head) 0 0;letter-spacing:-.02em;max-width:24ch}
+.ev-figs{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:40px}
+.ev .n{font-family:var(--sans);font-weight:300;font-size:var(--fs-h2);line-height:1;letter-spacing:-.03em;color:var(--green)}
+.ev .l{margin:12px 0 0;font-size:var(--fs-small);color:var(--night-text);line-height:1.5}
+.ev-note{margin:40px 0 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.14);font-size:var(--fs-small);color:var(--night-text)}
+.ev-note a{color:var(--green);font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+
+/* ---------- sections ---------- */
+section{padding:var(--sec) 0}
+.sec-head{max-width:820px}
+.sec-head h2{font-size:var(--fs-h2);line-height:1.08;margin:var(--gap-head) 0 var(--gap-para)}
+.sec-head p{color:var(--ink-2);margin:0;font-size:var(--fs-lead);max-width:620px}
+
+/* ---------- value ---------- */
+.value .cols{display:grid;grid-template-columns:repeat(3,1fr);column-gap:32px;row-gap:0;margin-top:64px}
+.col{display:grid;grid-template-rows:subgrid;grid-row:span 3;align-content:start;background:var(--soft);border-radius:var(--r);padding:32px 32px 36px}
+.col h3{font-size:var(--fs-h4);line-height:1.3;margin:var(--gap-head) 0 var(--gap-para);letter-spacing:-.015em;text-wrap:pretty}
+.col p{margin:0;color:var(--muted);font-size:var(--fs-small)}
+
+/* ---------- features ---------- */
+.features{background:var(--soft)}
+.features .sec-head{margin:0 auto 64px;text-align:center}
+.features .sec-head p{margin:0 auto}
+.features .sec-head .ask{margin-top:12px;font-family:var(--serif);font-style:italic;font-size:var(--fs-h4);color:var(--green-ink)}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;background:var(--card);border-radius:var(--r);overflow:hidden}
+.feat + .feat{margin-top:24px}
+.feat .text{display:flex;flex-direction:column;justify-content:center;padding:64px 56px}
+.feat:nth-child(odd) .text{order:2}
+.feat .pane{background:var(--mint);padding:48px;display:flex;align-items:center;justify-content:center}
+.feat h3{font-size:var(--fs-h3);line-height:1.15;margin:var(--gap-head) 0 var(--gap-para)}
+.feat p{margin:0;color:var(--ink-2);max-width:46ch}
+.feat .res{margin-top:28px;font-size:var(--fs-small);line-height:1.5;color:var(--night);background:var(--mint-2);border-radius:var(--r-in);padding:12px 16px;max-width:46ch}
+.feat .res b{font-weight:600;color:var(--night)}
+.media{position:relative;width:100%;border-radius:var(--r-in);overflow:hidden;background:var(--night-deep);aspect-ratio:16/9}
+.media video,.media img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* ---------- cta ---------- */
+.cta{position:relative;background:var(--night-deep);color:#fff;padding:56px 0;overflow:hidden;text-align:center}
+.cta .wrap{display:flex;flex-direction:column;align-items:center;gap:24px}
+.cta video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.cta::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,38,21,.55),rgba(7,38,21,.85))}
+.cta .wrap{position:relative;z-index:2}
+.cta h2{font-size:var(--fs-h3);line-height:1.1;margin:0;letter-spacing:-.025em}
+.cta h2 em.gi{color:var(--green)}
+.cta .btns{flex:0 0 auto}
+
+/* ---------- footer ---------- */
+footer{padding:40px 0;font-size:var(--fs-small);color:var(--muted);background:var(--soft)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px 32px}
+footer .links{display:flex;flex-wrap:wrap;gap:8px 24px}
+footer a{color:var(--ink-2);text-decoration:none}
+footer a:hover{color:var(--ink)}
+
+/* ---------- motion ---------- */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+@media (max-width:860px){
+  :root{--sec:80px}
+  .wrap{padding:0 20px}
+  .nav{padding:18px 0}
+  .nav .nav-cta{padding:13px 20px} /* 44px tap target */
+  .brand-tag,.nav-links a:not(.btn){display:none}
+  /* inline links: extend the hit area to 44px without moving the text */
+  .hero .lemma{padding:9px 0;margin:-9px 0}
+  .ev-note a{display:inline-block;padding:13px 0;margin:-13px 0}
+  .hero-body{padding:16px 0 28px}
+  .run{padding-top:0}
+  .ev{padding:32px 24px 28px;margin-top:48px}
+  .ev-figs{grid-template-columns:1fr;gap:28px;margin-top:32px}
+  .ev-note{margin-top:32px;padding-top:20px}
+  .value .cols{grid-template-columns:1fr;row-gap:16px;margin-top:48px}
+  .col{display:block;padding:24px 24px 28px}
+  .features .sec-head{margin-bottom:48px}
+  .feat{grid-template-columns:1fr}
+  .feat + .feat{margin-top:16px}
+  .feat .text{padding:28px 24px 32px;order:2}
+  .feat .pane{padding:16px;order:1}
+  .cta{padding:44px 0}
+  .cta .wrap{gap:20px}
+  footer .wrap{flex-direction:column;align-items:flex-start;gap:16px}
+}
+</style>
+
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <nav class="nav">
+      <a class="btn primary nav-cta" href="https://lemma.axiomatic.ai/r/pf2utRclWdU">Try Lemma today</a>
+      <div class="brand"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNzAuMDggNDAuMDAiPiA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4LDgpIj4gPGcgZmlsbD0iIzc3RDY0NSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCwtNCkgc2NhbGUoMC4xNzY4MCkiPiA8cGF0aCBkPSJNMTU2Ljc5MyA3NS43MTc3QzE1Mi4xOSA3NS43MTc3IDE0OC40ODggNzkuNDEzNyAxNDguNDg4IDg0LjAwODdWODQuNTA4MkwxMDEuMTYgMTMxLjY1N0M5OC4yNTgyIDEzNC41NTQgOTYuNjU3MiAxMzUuNDUgOTYuNjU3MiAxMzkuNTQ1VjE1MC4yMzNDOTYuNjU3MiAxNTQuMzI5IDk4LjI1ODIgMTU4LjIyNSAxMDEuMTYgMTYxLjEyMkwxMTguNzcgMTc0LjcwN0MxMjEuNjcyIDE3Ny42MDQgMTI1LjU3NCAxNzkuMjAyIDEyOS42NzcgMTc5LjIwMkgxMzcuOTgyQzE0MC45ODQgMTc5LjIwMiAxNDMuNDg1IDE3Ni43MDUgMTQzLjQ4NSAxNzMuNzA4QzE0My40ODUgMTcwLjcxMSAxNDAuOTg0IDE2OC4yMTQgMTM3Ljk4MiAxNjguMjE0SDEyOS42NzdDMTI4LjQ3NiAxNjguMjE0IDEyNy4zNzUgMTY3LjcxNCAxMjYuNDc1IDE2Ni45MTVMMTA4Ljk2NSAxNTMuNTNDMTA4LjE2NCAxNTIuNzMxIDEwNy42NjQgMTUxLjUzMiAxMDcuNjY0IDE1MC4zMzNWMTM5LjY0NUMxMDcuNjY0IDEzOC40NDYgMTA4LjE2NCAxMzcuMzQ3IDEwOC45NjUgMTM2LjQ0OEwxMTcuMDY5IDEzMS4zNTdIMTMzLjI3OUMxMzQuNzggMTMzLjE1NSAxMzYuOTgxIDEzNC4zNTQgMTM5LjU4MyAxMzQuMzU0QzE0NC4wODUgMTM0LjM1NCAxNDcuNjg4IDEzMC43NTggMTQ3LjY4OCAxMjYuMjYzQzE0Ny42ODggMTIxLjc2OCAxNDQuMDg1IDExOC4xNzIgMTM5LjU4MyAxMTguMTcyQzEzNy4wODEgMTE4LjE3MiAxMzQuNzggMTE5LjM3IDEzMy4yNzkgMTIxLjE2OEgxMjcuMTc1TDE1Ni4xOTMgOTIuMTk5OEgxNTYuNjkzQzE2MS4yOTYgOTIuMTk5OCAxNjQuOTk4IDg4LjUwMzggMTY0Ljk5OCA4My45MDg4QzE2NS4wOTggNzkuNDEzNyAxNjEuMzk2IDc1LjcxNzcgMTU2Ljc5MyA3NS43MTc3WiI+PC9wYXRoPiA8cGF0aCBkPSJNNjguNjQwNyAxNTAuMjMzVjQ1LjY1MDRDNjguNjQwNyA0MC4xNTYzIDY2LjUzOTUgMzUuMDYxOSA2Mi42MzcyIDMxLjE2NjFMNTAuNjMgMTkuMjc5QzUwLjczMDEgMTguNzc5NiA1MC44MzAyIDE4LjI4MDEgNTAuODMwMiAxNy42ODA4QzUwLjgzMDIgMTMuMDg1OCA0Ny4xMjggOS4zODk3NyA0Mi41MjUyIDkuMzg5NzdDMzcuOTIyNSA5LjM4OTc3IDM0LjIyMDMgMTMuMDg1OCAzNC4yMjAzIDE3LjY4MDhDMzQuMjIwMyAyMi4yNzU4IDM3LjYyMjMgMjUuNjcyMSA0MS45MjQ5IDI1Ljk3MTdMNTQuOTMyNiAzOC45NTc2QzU2LjczMzcgNDAuNzU1NyA1Ny43MzQzIDQzLjE1MzEgNTcuNzM0MyA0NS42NTA0Vjk1Ljc5NThMNTAuODMwMiA4OC45MDMzVjU4LjQzNjVDNTAuODMwMiA1NC4zNDA5IDQ5LjIyOTIgNTAuNDQ1MSA0Ni4zMjc1IDQ3LjU0ODNMMzEuNzE4OCAzNC4xNjI4QzMxLjUxODcgMzAuMTY3MiAyOC4zMTY4IDI2Ljk3MDcgMjQuMjE0NCAyNi45NzA3QzIwLjExMTkgMjYuOTcwNyAxNi43MDk5IDMwLjM2NyAxNi43MDk5IDM0LjQ2MjVDMTYuNzA5OSAzOC41NTgxIDE5LjkxMTggNDEuNzU0NiAyMy45MTQyIDQxLjk1NDRMMzguMzIyNyA1NS4zMzk4QzM5LjEyMzIgNTYuMTM5IDM5LjYyMzUgNTcuMzM3NyAzOS42MjM1IDU4LjUzNjRWNzcuOTE1M0wxNy42MTA1IDU1LjgzOTNDMTcuNDEwMyA1MS44NDM2IDE0LjIwODQgNDguNjQ3MSAxMC4xMDYgNDguNjQ3MUM2LjAwMzU2IDQ4LjY0NzEgMi42MDE1NCA1Mi4wNDM0IDIuNjAxNTQgNTYuMTM5QzIuNjAxNTQgNjAuMjM0NSA1LjgwMzQ0IDYzLjQzMSA5LjgwNTgyIDYzLjYzMDhMNTcuNjM0MiAxMTEuMjc5VjEyMi40NjRMMTYuNjA5OSA4NC42MDhWODQuMTA4NkMxNi42MDk5IDc5LjUxMzUgMTIuOTA3NyA3NS44MTc2IDguMzA0OTMgNzUuODE3NkMzLjcwMjIgNzUuODE3NiAwIDc5LjUxMzUgMCA4NC4xMDg2QzAgODguNzAzNiAzLjcwMjIgOTIuMzk5NSA4LjMwNDkzIDkyLjM5OTVIOC44MDUyMkwzNy44MjI0IDExOC4zNjhIMzAuMDE3OEMyOC41MTY5IDExNi41NyAyNi4zMTU2IDExNS4zNzEgMjMuNzE0MSAxMTUuMzcxQzE5LjIxMTQgMTE1LjM3MSAxNS42MDkzIDExOC45NjcgMTUuNjA5MyAxMjMuNDYzQzE1LjYwOTMgMTI3Ljk1OCAxOS4yMTE0IDEzMS41NTQgMjMuNzE0MSAxMzEuNTU0QzI2LjIxNTYgMTMxLjU1NCAyOC41MTY5IDEzMC4zNTUgMzAuMDE3OCAxMjguNTU3SDQ4LjAyODVMNTcuNjM0MiAxMzguMTQ3VjE1MC40MzNDNTcuNjM0MiAxNTEuNjMyIDU3LjEzMzkgMTUyLjczMSA1Ni4zMzM0IDE1My42M0wzOC4yMjI3IDE2OC43MTNDMzcuNDIyMiAxNjkuNTEyIDM2LjIyMTUgMTcwLjAxMiAzNS4wMjA4IDE3MC4wMTJIMjguNTE2OUMyNS41MTUxIDE3MC4wMTIgMjMuMDEzNyAxNzIuNDA5IDIzLjAxMzcgMTc1LjUwNkMyMy4wMTM3IDE3OC42MDMgMjUuNDE1MSAxODEgMjguNTE2OSAxODFIMzUuMTIwOEMzOS4yMjMzIDE4MSA0My4yMjU3IDE3OS40MDIgNDYuMDI3MyAxNzYuNTA1TDY0LjEzODEgMTYxLjQyMUM2Ny4wMzk4IDE1OC4yMjUgNjguNjQwNyAxNTQuMzI5IDY4LjY0MDcgMTUwLjIzM1oiPjwvcGF0aD4gPHBhdGggZD0iTTEwMi41NjEgMTY5LjgxMkg5Ny41NThDOTUuMDU2NSAxNjkuODEyIDkyLjY1NTEgMTY4LjgxMyA5MC44NTQgMTY3LjAxNUM4OS4wNTMgMTY1LjIxNyA4OC4wNTI0IDE2Mi44MiA4OC4wNTI0IDE2MC4zMjJMODguMTUyNCAxMzUuNzQ5Qzg4LjE1MjQgMTMxLjU1NCA4OS44NTM1IDEzMC41NTggOTIuODU1MiAxMjcuNTYxTDE1Mi44OTEgNjcuNzI2NEgxNTMuMTkxQzE1Ny43OTQgNjcuNzI2NCAxNjEuNDk2IDY0LjAzMDQgMTYxLjQ5NiA1OS40MzU0QzE2MS40OTYgNTQuODQwNCAxNTcuNzk0IDUxLjE0NDQgMTUzLjE5MSA1MS4xNDQ0QzE0OC41ODggNTEuMTQ0NCAxNDQuODg2IDU0Ljg0MDQgMTQ0Ljg4NiA1OS40MzU0VjYwLjEzNDZMMTE4LjA3IDg2LjkwNTVWNjguMjI1OEMxMTguMDcgNjcuMDI3MSAxMTguNTcgNjUuOTI4MyAxMTkuMzcxIDY1LjAyOTNMMTQxLjA4NCA0My4zNTI5QzE0NS4wODYgNDMuMTUzMSAxNDguMjg4IDM5Ljk1NjYgMTQ4LjI4OCAzNS44NjFDMTQ4LjI4OCAzMS43NjU1IDE0NC44ODYgMjguMzY5MiAxNDAuNzg0IDI4LjM2OTJDMTM2LjY4MSAyOC4zNjkyIDEzMy40NzkgMzEuNTY1NyAxMzMuMjc5IDM1LjU2MTNMMTExLjU2NiA1Ny4yMzc4QzEwOC42NjUgNjAuMTM0NiAxMDcuMDY0IDY0LjAzMDQgMTA3LjA2NCA2OC4xMjU5Vjk3LjY5MzhMODguMDUyNCAxMTYuNTczVjU3LjUzNzVMMTE5LjY3MSAyNS45NzE4SDEyMC4xNzFDMTI0Ljc3NCAyNS45NzE4IDEyOC40NzYgMjIuMjc1OCAxMjguNDc2IDE3LjY4MDhDMTI4LjQ3NiAxMy4wODU4IDEyNC43NzQgOS4zODk3OSAxMjAuMTcxIDkuMzg5NzlDMTE1LjU2OSA5LjM4OTc5IDExMS44NjcgMTMuMDg1OCAxMTEuODY3IDE3LjY4MDhWMTguMjgwMUw4OC4xNTI0IDQyLjA1NDNWMTQuNDg0M0M4OS44NTM0IDEyLjk4NTkgOTAuOTU0MSAxMC43ODgzIDkwLjk1NDEgOC4yOTA5OUM5MC45NTQxIDMuNjk1OTggODcuMjUxOSAwIDgyLjY0OTIgMEM3OC4wNDY0IDAgNzQuMzQ0MiAzLjY5NTk4IDc0LjM0NDIgOC4yOTA5OUM3NC4zNDQyIDEwLjc4ODMgNzUuNDQ0OSAxMy4wODU4IDc3LjI0NiAxNC41ODQxTDc3LjE0NTkgMTYwLjEyM1YxNjAuMzIyQzc3LjE0NTkgMTY1LjUxNyA3Mi44NDM0IDE2OS44MTIgNjcuNjQwMyAxNjkuODEySDYyLjYzNzNDNTkuNjM1NSAxNjkuODEyIDU3LjEzNCAxNzIuMzA5IDU3LjEzNCAxNzUuMzA2QzU3LjEzNCAxNzguMzAzIDU5LjYzNTUgMTgwLjggNjIuNjM3MyAxODAuOEgxMDIuNjYxQzEwNS42NjMgMTgwLjggMTA4LjE2NCAxNzguMzAzIDEwOC4xNjQgMTc1LjMwNkMxMDguMDY0IDE3Mi4zMDkgMTA1LjY2MyAxNjkuODEyIDEwMi41NjEgMTY5LjgxMloiPjwvcGF0aD4gPHBhdGggZD0iTTQ5LjcyOTcgMTQwLjM0NEM1MS4zMzA3IDEzOC43NDYgNTEuMzMwNyAxMzYuMTQ5IDQ5LjcyOTcgMTM0LjU1MUM0OC4xMjg4IDEzMi45NTIgNDUuNTI3MiAxMzIuOTUyIDQzLjkyNjMgMTM0LjU1MUM0Mi4zMjUzIDEzNi4xNDkgNDIuMzI1MyAxMzguNzQ2IDQzLjkyNjMgMTQwLjM0NEM0NS40MjcyIDE0MS45NDIgNDguMDI4NyAxNDEuOTQyIDQ5LjcyOTcgMTQwLjM0NFoiPjwvcGF0aD4gPHBhdGggZD0iTTEyLjQwNzUgMTEwLjU4QzE0LjAwODQgMTA4Ljk4MiAxNC4wMDg0IDEwNi4zODQgMTIuNDA3NSAxMDQuNzg2QzEwLjgwNjUgMTAzLjE4OCA4LjIwNDk4IDEwMy4xODggNi42MDQwMyAxMDQuNzg2QzUuMDAzMDggMTA2LjM4NCA1LjAwMzA4IDEwOC45ODIgNi42MDQwMyAxMTAuNThDOC4yMDQ5OCAxMTIuMTc4IDEwLjgwNjUgMTEyLjE3OCAxMi40MDc1IDExMC41OFoiPjwvcGF0aD4gPHBhdGggZD0iTTEyMi41NzMgMTQxLjI0M0MxMjQuNjc0IDE0MC4zNDQgMTI1LjY3NCAxMzcuOTQ3IDEyNC43NzQgMTM1Ljg0OUMxMjMuODczIDEzMy43NTEgMTIxLjQ3MiAxMzIuNzUyIDExOS4zNzEgMTMzLjY1MUMxMTcuMjY5IDEzNC41NSAxMTYuMjY5IDEzNi45NDggMTE3LjE2OSAxMzkuMDQ2QzExOC4wNyAxNDEuMTQzIDEyMC40NzEgMTQyLjE0MiAxMjIuNTczIDE0MS4yNDNaIj48L3BhdGg+IDxwYXRoIGQ9Ik0xNTMuMTkxIDEwMy41ODdDMTUwLjg4OSAxMDMuNTg3IDE0OS4wODggMTA1LjM4NSAxNDkuMDg4IDEwNy42ODNDMTQ5LjA4OCAxMDkuOTggMTUwLjg4OSAxMTEuNzc4IDE1My4xOTEgMTExLjc3OEMxNTUuNDkyIDExMS43NzggMTU3LjI5MyAxMDkuOTggMTU3LjI5MyAxMDcuNjgzQzE1Ny4zOTMgMTA1LjM4NSAxNTUuNDkyIDEwMy41ODcgMTUzLjE5MSAxMDMuNTg3WiI+PC9wYXRoPiA8cGF0aCBkPSJNOTcuNTU3NyA2OC4yMjU4QzEwMC4zNTkgNjguMjI1OCAxMDIuNTYxIDY1LjkyODMgMTAyLjU2MSA2My4yMzEzQzEwMi41NjEgNjAuNTM0MiAxMDAuMjU5IDU4LjIzNjcgOTcuNTU3NyA1OC4yMzY3Qzk0Ljg1NjEgNTguMjM2NyA5Mi41NTQ3IDYwLjUzNDIgOTIuNTU0NyA2My4yMzEzQzkyLjU1NDcgNjUuOTI4MyA5NC43NTYgNjguMjI1OCA5Ny41NTc3IDY4LjIyNThaIj48L3BhdGg+IDxwYXRoIGQ9Ik05Ny41NTc3IDgzLjIwOTVDMTAwLjM1OSA4My4yMDk1IDEwMi41NjEgODAuOTEyIDEwMi41NjEgNzguMjE1QzEwMi41NjEgNzUuNTE3OSAxMDAuMjU5IDczLjIyMDQgOTcuNTU3NyA3My4yMjA0Qzk0Ljg1NjEgNzMuMjIwNCA5Mi41NTQ3IDc1LjUxNzkgOTIuNTU0NyA3OC4yMTVDOTIuNTU0NyA4MC45MTIgOTQuNzU2IDgzLjIwOTUgOTcuNTU3NyA4My4yMDk1WiI+PC9wYXRoPiA8cGF0aCBkPSJNOTcuNTU3NyA5OC4wOTM0QzEwMC4zNTkgOTguMDkzNCAxMDIuNTYxIDk1Ljc5NTkgMTAyLjU2MSA5My4wOTg4QzEwMi41NjEgOTAuNDAxOCAxMDAuMjU5IDg4LjEwNDIgOTcuNTU3NyA4OC4xMDQyQzk0Ljg1NjEgODguMTA0MiA5Mi41NTQ3IDkwLjQwMTggOTIuNTU0NyA5My4wOTg4QzkyLjU1NDcgOTUuNzk1OSA5NC43NTYgOTguMDkzNCA5Ny41NTc3IDk4LjA5MzRaIj48L3BhdGg+IDxwYXRoIGQ9Ik00NS40MjY4IDQxLjk1NDRDNDYuODI3NiA0MS45NTQ0IDQ3LjkyODMgNDAuODU1NiA0Ny45MjgzIDM5LjQ1NzFDNDcuOTI4MyAzOC4wNTg2IDQ2LjgyNzYgMzYuOTU5OCA0NS40MjY4IDM2Ljk1OThDNDQuMDI1OSAzNi45NTk4IDQyLjkyNTMgMzguMDU4NiA0Mi45MjUzIDM5LjQ1NzFDNDIuOTI1MyA0MC44NTU2IDQ0LjAyNTkgNDEuOTU0NCA0NS40MjY4IDQxLjk1NDRaIj48L3BhdGg+IDxwYXRoIGQ9Ik00NS44MjcyIDEwOC4xODFDNDcuMjI4IDEwOC4xODEgNDguMzI4NyAxMDcuMDgzIDQ4LjMyODcgMTA1LjY4NEM0OC4zMjg3IDEwNC4yODYgNDcuMjI4IDEwMy4xODcgNDUuODI3MiAxMDMuMTg3QzQ0LjQyNjMgMTAzLjE4NyA0My4zMjU3IDEwNC4yODYgNDMuMzI1NyAxMDUuNjg0QzQzLjQyNTcgMTA3LjA4MyA0NC41MjY0IDEwOC4xODEgNDUuODI3MiAxMDguMTgxWiI+PC9wYXRoPiA8cGF0aCBkPSJNMTE3Ljg3IDQyLjU1MzhDMTE5LjI3IDQyLjU1MzggMTIwLjM3MSA0MS40NTUgMTIwLjM3MSA0MC4wNTY1QzEyMC4zNzEgMzguNjU4IDExOS4yNyAzNy41NTkyIDExNy44NyAzNy41NTkyQzExNi40NjkgMzcuNTU5MiAxMTUuMzY4IDM4LjY1OCAxMTUuMzY4IDQwLjA1NjVDMTE1LjM2OCA0MS40NTUgMTE2LjQ2OSA0Mi41NTM4IDExNy44NyA0Mi41NTM4WiI+PC9wYXRoPiA8cGF0aCBkPSJNMTMzLjg4IDY2LjQyNzhDMTM2LjE4MSA2Ni4wMjgyIDEzNy42ODIgNjMuOTMwNSAxMzcuMjgyIDYxLjYzM0MxMzYuODgxIDU5LjMzNTUgMTM0Ljc4IDU3LjgzNzEgMTMyLjQ3OSA1OC4yMzY3QzEzMC4xNzcgNTguNjM2MiAxMjguNjc3IDYwLjczNCAxMjkuMDc3IDYzLjAzMTVDMTI5LjQ3NyA2NS4zMjkgMTMxLjU3OCA2Ni44MjczIDEzMy44OCA2Ni40Mjc4WiI+PC9wYXRoPiA8cGF0aCBkPSJNNjguNzQxIDIxLjY3NjRDNjkuNjQxNiAxOS41Nzg3IDY4LjY0MSAxNy4wODE0IDY2LjQzOTcgMTYuMjgyM0M2NC4zMzg0IDE1LjM4MzMgNjEuODM2OSAxNi4zODIyIDYxLjAzNjQgMTguNDc5OUM2MC4xMzU5IDIwLjU3NzYgNjEuMTM2NSAyMy4wNzQ5IDYzLjMzNzggMjMuODc0MUM2NS40MzkxIDI0Ljc3MzEgNjcuODQwNSAyMy43NzQyIDY4Ljc0MSAyMS42NzY0WiI+PC9wYXRoPiA8cGF0aCBkPSJNOTguNTU4OCAyNC4xNzM3QzEwMC44NiAyMy43NzQyIDEwMi4zNjEgMjEuNjc2NSAxMDEuOTYxIDE5LjM3OUMxMDEuNTYxIDE3LjA4MTUgOTkuNDU5MyAxNS41ODMxIDk3LjE1OCAxNS45ODI2Qzk0Ljg1NjYgMTYuMzgyMiA5My4zNTU3IDE4LjQ3OTkgOTMuNzU1OSAyMC43Nzc0Qzk0LjE1NjIgMjMuMDc0OSA5Ni4yNTc0IDI0LjQ3MzQgOTguNTU4OCAyNC4xNzM3WiI+PC9wYXRoPiA8cGF0aCBkPSJNMzEuMzE4NyA2Mi4xMzI0QzMzLjQxOTkgNjIuMTMyNCAzNS4wMjA5IDYwLjQzNDMgMzUuMDIwOSA1OC40MzY1QzM1LjAyMDkgNTYuMzM4NyAzMy4zMTk5IDU0Ljc0MDUgMzEuMzE4NyA1NC43NDA1QzI5LjIxNzUgNTQuNzQwNSAyNy42MTY1IDU2LjQzODYgMjcuNjE2NSA1OC40MzY1QzI3LjUxNjQgNjAuNDM0MyAyOS4yMTc1IDYyLjEzMjQgMzEuMzE4NyA2Mi4xMzI0WiI+PC9wYXRoPiA8L2c+IDxwYXRoIGZpbGw9IiMwMjA2MTgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM5LjE3LDIxLjI0KSIgZD0iTTAuNDAgMC4wMCA1LjcyIC0xNC41NUg3LjgxTDEzLjE1IDAuMDBIMTEuMjJMOC4xNSAtOC42OFE3Ljg2IC05LjUwIDcuNDggLTEwLjY3UTcuMTEgLTExLjg0IDYuNTYgLTEzLjY4SDYuOTZRNi40MiAtMTEuODMgNi4wMyAtMTAuNjVRNS42NSAtOS40NiA1LjM4IC04LjY4TDIuMzMgMC4wMFpNMy4xMCAtNC4wN1YtNS42N0gxMC40NlYtNC4wN1ogTTE0LjA4IDAuMDAgMTguMzkgLTYuMTUgMTguMzggLTQuODMgMTQuMzAgLTEwLjcySDE2LjMyTDE3LjY5IC04LjYzUTE4LjE4IC03Ljg4IDE4LjU3IC03LjIwUTE4Ljk2IC02LjUzIDE5LjM3IC01Ljg4SDE4LjQ5UTE4LjkxIC02LjUzIDE5LjI3IC03LjIwUTE5LjY0IC03Ljg4IDIwLjE0IC04LjYzTDIxLjUzIC0xMC43MkgyMy41MkwxOS40MiAtNC43OFYtNi4wN0wyMy42OSAwLjAwSDIxLjY4TDIwLjA3IC0yLjQyUTE5LjU5IC0zLjE0IDE5LjIxIC0zLjgwUTE4LjgyIC00LjQ1IDE4LjQyIC01LjA3SDE5LjMyUTE4LjkyIC00LjQ1IDE4LjU2IC0zLjgwUTE4LjIwIC0zLjE0IDE3LjcxIC0yLjQyTDE2LjA3IDAuMDBaIE0yNS42NSAwLjAwVi0xMC43MkgyNy4zN1YwLjAwWk0yNi41MiAtMTIuNThRMjYuMDMgLTEyLjU4IDI1LjY4IC0xMi45MlEyNS4zMyAtMTMuMjYgMjUuMzMgLTEzLjczUTI1LjMzIC0xNC4yMSAyNS42OCAtMTQuNTVRMjYuMDMgLTE0Ljg4IDI2LjUyIC0xNC44OFEyNy4wMSAtMTQuODggMjcuMzYgLTE0LjU1UTI3LjcxIC0xNC4yMSAyNy43MSAtMTMuNzNRMjcuNzEgLTEzLjI2IDI3LjM2IC0xMi45MlEyNy4wMSAtMTIuNTggMjYuNTIgLTEyLjU4WiBNMzQuNjMgMC4yM1EzMy4xNiAwLjIzIDMyLjA2IC0wLjQ2UTMwLjk1IC0xLjE2IDMwLjM0IC0yLjQxUTI5LjcyIC0zLjY2IDI5LjcyIC01LjMxUTI5LjcyIC02Ljk3IDMwLjM0IC04LjIzUTMwLjk1IC05LjQ5IDMyLjA2IC0xMC4xOVEzMy4xNiAtMTAuODkgMzQuNjMgLTEwLjg5UTM2LjEwIC0xMC44OSAzNy4yMSAtMTAuMTlRMzguMzIgLTkuNDkgMzguOTMgLTguMjNRMzkuNTUgLTYuOTcgMzkuNTUgLTUuMzFRMzkuNTUgLTMuNjYgMzguOTMgLTIuNDFRMzguMzIgLTEuMTYgMzcuMjEgLTAuNDZRMzYuMTAgMC4yMyAzNC42MyAwLjIzWk0zNC42MyAtMS4zMlEzNS42OSAtMS4zMiAzNi40MCAtMS44NVEzNy4xMCAtMi4zOSAzNy40NSAtMy4zMFEzNy44MSAtNC4yMCAzNy44MSAtNS4zMVEzNy44MSAtNi40MiAzNy40NSAtNy4zNFEzNy4xMCAtOC4yNSAzNi40MCAtOC43OVEzNS42OSAtOS4zNCAzNC42MyAtOS4zNFEzMy41OCAtOS4zNCAzMi44OCAtOC43OVEzMi4xNyAtOC4yNSAzMS44MiAtNy4zNFEzMS40NyAtNi40MyAzMS40NyAtNS4zMVEzMS40NyAtNC4yMCAzMS44MiAtMy4yOVEzMi4xNyAtMi4zOSAzMi44NyAtMS44NVEzMy41NyAtMS4zMiAzNC42MyAtMS4zMlogTTQxLjkwIDAuMDBWLTEwLjcySDQzLjU4TDQzLjU4IC04LjM5SDQzLjQyUTQzLjY4IC05LjIzIDQ0LjE2IC05Ljc5UTQ0LjY1IC0xMC4zNSA0NS4yOSAtMTAuNjNRNDUuOTQgLTEwLjkxIDQ2LjY0IC0xMC45MVE0Ny44NCAtMTAuOTEgNDguNjEgLTEwLjE5UTQ5LjM4IC05LjQ4IDQ5LjYwIC04LjM3SDQ5LjMzUTQ5LjUzIC05LjEzIDUwLjA0IC05LjcwUTUwLjU0IC0xMC4yNyA1MS4yNiAtMTAuNTlRNTEuOTkgLTEwLjkxIDUyLjg2IC0xMC45MVE1My44MCAtMTAuOTEgNTQuNTggLTEwLjUwUTU1LjM3IC0xMC4wOSA1NS44MyAtOS4yNlE1Ni4yOSAtOC40MyA1Ni4yOSAtNy4xNlYwLjAwSDU0LjU3Vi03LjEzUTU0LjU3IC04LjMyIDUzLjkwIC04LjgzUTUzLjIzIC05LjM0IDUyLjM1IC05LjM0UTUxLjYxIC05LjM0IDUxLjA4IC05LjAzUTUwLjU0IC04LjcyIDUwLjI1IC04LjE4UTQ5Ljk2IC03LjY0IDQ5Ljk2IC02Ljk0VjAuMDBINDguMjNWLTcuMzBRNDguMjMgLTguMjIgNDcuNjIgLTguNzhRNDcuMDEgLTkuMzQgNDYuMDggLTkuMzRRNDUuNDQgLTkuMzQgNDQuODggLTkuMDRRNDQuMzEgLTguNzQgNDMuOTcgLTguMTVRNDMuNjIgLTcuNTYgNDMuNjIgLTYuNjhWMC4wMFogTTYyLjI2IDAuMjJRNjEuMjMgMC4yMiA2MC4zOSAtMC4xNlE1OS41NiAtMC41MyA1OS4wNyAtMS4yN1E1OC41OCAtMi4wMCA1OC41OCAtMy4wNlE1OC41OCAtMy45OCA1OC45NCAtNC41NlE1OS4zMSAtNS4xMyA1OS45MSAtNS40NlE2MC41MiAtNS43OSA2MS4yNyAtNS45NlE2Mi4wMSAtNi4xMyA2Mi43OCAtNi4yMlE2My43NiAtNi4zNSA2NC4zNiAtNi40MlE2NC45NiAtNi40OSA2NS4yNCAtNi42NVE2NS41MSAtNi44MiA2NS41MSAtNy4yMVYtNy4yOVE2NS41MSAtNy45MyA2NS4yNiAtOC4zOVE2NS4wMCAtOC44NSA2NC40OSAtOS4xMFE2My45OCAtOS4zNiA2My4yMyAtOS4zNlE2Mi40NyAtOS4zNiA2MS45MiAtOS4xMVE2MS4zNiAtOC44NyA2MS4wMiAtOC40OVE2MC42OCAtOC4xMSA2MC41NSAtNy42OEw1OC44NiAtOC4wNVE1OS4xNiAtOS4wMyA1OS44MSAtOS42NVE2MC40NyAtMTAuMjcgNjEuMzUgLTEwLjU3UTYyLjIzIC0xMC44NyA2My4yMCAtMTAuODdRNjMuODYgLTEwLjg3IDY0LjU3IC0xMC43MFE2NS4yOCAtMTAuNTMgNjUuODggLTEwLjEyUTY2LjQ4IC05LjcxIDY2Ljg2IC04Ljk5UTY3LjIzIC04LjI3IDY3LjIzIC03LjE3VjAuMDBINjUuNTNWLTEuNDhINjUuNDRRNjUuMjYgLTEuMTAgNjQuODYgLTAuNzBRNjQuNDcgLTAuMzEgNjMuODMgLTAuMDRRNjMuMTkgMC4yMiA2Mi4yNiAwLjIyWk02Mi41NCAtMS4zMVE2My41MyAtMS4zMSA2NC4xOSAtMS42OFE2NC44NSAtMi4wNiA2NS4xOCAtMi42NlE2NS41MSAtMy4yNiA2NS41MSAtMy45M1YtNS4zN1E2NS40MSAtNS4yNiA2NS4wOCAtNS4xNlE2NC43NiAtNS4wNyA2NC4zMiAtNC45OVE2My44OSAtNC45MiA2My40NSAtNC44NlE2My4wMiAtNC44MCA2Mi43MCAtNC43NlE2Mi4wOCAtNC42OCA2MS41MyAtNC40OVE2MC45OSAtNC4zMCA2MC42NiAtMy45NFE2MC4zMyAtMy41OCA2MC4zMyAtMi45N1E2MC4zMyAtMi40MyA2MC42MSAtMi4wNlE2MC44OSAtMS42OSA2MS4zOSAtMS41MFE2MS44OCAtMS4zMSA2Mi41NCAtMS4zMVogTTc0LjQ4IC0xMC43MlYtOS4yNEg2OC44NVYtMTAuNzJaTTcwLjU2IC0xMy4zOUg3Mi4yOFYtMi43MlE3Mi4yOCAtMi4wMyA3Mi41NiAtMS43M1E3Mi44NSAtMS40MyA3My41MiAtMS40M1E3My43MCAtMS40MyA3My45NiAtMS40NVE3NC4yMiAtMS40OCA3NC40NCAtMS41MEw3NC42OCAtMC4wNFE3NC40MSAwLjAzIDc0LjA4IDAuMDZRNzMuNzUgMC4wOSA3My40MyAwLjA5UTcyLjA1IDAuMDkgNzEuMzAgLTAuNjBRNzAuNTYgLTEuMjkgNzAuNTYgLTIuNTdaIE03Ni41NSAwLjAwVi0xMC43Mkg3OC4yN1YwLjAwWk03Ny40MiAtMTIuNThRNzYuOTMgLTEyLjU4IDc2LjU4IC0xMi45MlE3Ni4yMiAtMTMuMjYgNzYuMjIgLTEzLjczUTc2LjIyIC0xNC4yMSA3Ni41OCAtMTQuNTVRNzYuOTMgLTE0Ljg4IDc3LjQxIC0xNC44OFE3Ny45MSAtMTQuODggNzguMjYgLTE0LjU1UTc4LjYxIC0xNC4yMSA3OC42MSAtMTMuNzNRNzguNjEgLTEzLjI2IDc4LjI2IC0xMi45MlE3Ny45MSAtMTIuNTggNzcuNDIgLTEyLjU4WiBNODUuNTMgMC4yM1E4NC4wNiAwLjIzIDgyLjk2IC0wLjQ2UTgxLjg1IC0xLjE2IDgxLjI0IC0yLjQxUTgwLjYyIC0zLjY2IDgwLjYyIC01LjMxUTgwLjYyIC02Ljk3IDgxLjI0IC04LjIzUTgxLjg1IC05LjQ5IDgyLjk2IC0xMC4xOVE4NC4wNiAtMTAuODkgODUuNTMgLTEwLjg5UTg2LjM1IC0xMC44OSA4Ny4wNyAtMTAuNjZRODcuNzggLTEwLjQzIDg4LjM2IC0xMC4wMVE4OC45NCAtOS42MCA4OS4zNCAtOS4wMFE4OS43NCAtOC40MSA4OS45MyAtNy42OEw4OC4yNCAtNy4zNlE4OC4xMyAtNy43OSA4Ny45MCAtOC4xNVE4Ny42NiAtOC41MSA4Ny4zMiAtOC43OFE4Ni45OCAtOS4wNCA4Ni41MyAtOS4xOVE4Ni4wOCAtOS4zNCA4NS41MyAtOS4zNFE4NC40OCAtOS4zNCA4My43NyAtOC43OVE4My4wNyAtOC4yNSA4Mi43MiAtNy4zNFE4Mi4zNyAtNi40MyA4Mi4zNyAtNS4zMVE4Mi4zNyAtNC4yMCA4Mi43MiAtMy4yOVE4My4wNyAtMi4zOSA4My43NyAtMS44NVE4NC40NyAtMS4zMiA4NS41MyAtMS4zMlE4Ni4wOCAtMS4zMiA4Ni41NCAtMS40NlE4Ni45OSAtMS42MSA4Ny4zMyAtMS44OFE4Ny42OCAtMi4xNSA4Ny45MSAtMi41M1E4OC4xNCAtMi45MCA4OC4yNiAtMy4zNUw4OS45NSAtMy4wM1E4OS43NyAtMi4yOSA4OS4zNyAtMS42OVE4OC45NiAtMS4wOSA4OC4zOCAtMC42NlE4Ny44MCAtMC4yMyA4Ny4wOCAwLjAwUTg2LjM1IDAuMjMgODUuNTMgMC4yM1ogTTk2LjYzIDAuMDAgMTAxLjk1IC0xNC41NUgxMDQuMDRMMTA5LjM4IDAuMDBIMTA3LjQ1TDEwNC4zOCAtOC42OFExMDQuMDkgLTkuNTAgMTAzLjcxIC0xMC42N1ExMDMuMzQgLTExLjg0IDEwMi43OSAtMTMuNjhIMTAzLjE5UTEwMi42NSAtMTEuODMgMTAyLjI2IC0xMC42NVExMDEuODggLTkuNDYgMTAxLjYxIC04LjY4TDk4LjU2IDAuMDBaTTk5LjMzIC00LjA3Vi01LjY3SDEwNi42OVYtNC4wN1ogTTExMy4yNiAtMTQuNTVWMC4wMEgxMTEuNDRWLTE0LjU1WiI+PC9wYXRoPiA8L2c+IDwvc3ZnPg==" alt="Axiomatic AI"><span class="brand-tag">We validate and verify</span></div>
+    </nav>
+    <div class="hero-body" id="hero-body">
+      <div class="hero-top"><a class="lemma" href="https://lemma.axiomatic.ai/">Lemma</a><span class="eyebrow">at a glance</span></div>
+      <h1>The sandbox for <em class="gi">scientists.</em></h1>
+    </div>
+  </div>
+</header>
+
+<section class="run">
+  <div class="wrap">
+    <div class="frame">
+      <video src="media/paper-validation-glance.mp4" poster="media/paper-validation-glance.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Lemma validating a paper: the annotated PDF, the equation dependency graph and the report"></video>
+    </div>
+  </div>
+</section>
+
+<section class="value" id="why">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Why Lemma</div>
+      <h2>Scientific work, <em class="gi">end to end.</em></h2>
+      <p>From a paper or a problem to a checked result, in one place: the software to run it, the model to run it on, and the checks to trust it.</p>
+    </div>
+    <div class="cols reveal">
+      <div class="col">
+        <div class="eyebrow">In the browser</div>
+        <h3>Run scientific work in the browser.</h3>
+        <p>92 scientific packages plus Julia, LaTeX, Lean, MEEP and ngspice. From 1 to 20 CPUs, or an NVIDIA H200 GPU with 192 GB. No setup, no installs.</p>
+      </div>
+      <div class="col">
+        <div class="eyebrow">Your choice of model</div>
+        <h3>Choose the model for the task.</h3>
+        <p>Frontier models, open-weight alternatives for extra data protection, and the first Argon integration.</p>
+      </div>
+      <div class="col">
+        <div class="eyebrow">Under your direction</div>
+        <h3>Direct and inspect the work.</h3>
+        <p>Plan, verify and approve mode: Lemma plans the work, runs each task with its own checks, and hands you the results and a report of what was checked.</p>
+      </div>
+    </div>
+    <div class="ev reveal" id="evidence">
+      <div class="ev-head"><div class="eyebrow">The evidence</div><h3>Lemma finds more of the errors in real papers.</h3></div>
+      <div class="ev-figs">
+        <div class="fig"><div class="n">93%</div><p class="l">of author-confirmed errors found in 26 maths and CS papers. General AI models: 48–79%.</p></div>
+        <div class="fig"><div class="n">84%</div><p class="l">in 50 corrected or withdrawn physics papers. Gemini 3.1 Pro: 52%.</p></div>
+        <div class="fig"><div class="n">103/104</div><p class="l">references with a known answer judged correctly.</p></div>
+      </div>
+      <p class="ev-note">Lemma does not replace peer review. <a href="https://axiomatic.ai/blog/lemma-paper-validation/">How we measured it →</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">What you can do with Lemma</div>
+      <h2>Real sessions, <em class="gi">real checks.</em></h2>
+      <p>Each example is a real Lemma run, with the check it passed.</p>
+      <p class="ask">What will you build with Lemma?</p>
+    </div>
+
+    <div class="feat">
+      <div class="text">
+        <div class="eyebrow">Featured example</div>
+        <h3>Go beyond the paper</h3>
+        <p>Rebuild a paper's model, check it against every number the authors report, then explore where they didn't go.</p>
+        <div class="res"><b>Checked:</b> 17 of 17 numbers reproduced, then a prediction not in the paper</div>
+      </div>
+      <div class="pane"><div class="media"><img src="https://axiomatic-ai.github.io/product/lemma-at-a-glance/media/beyond-side.jpg" alt="The paper on the left, Lemma's live reproduction on the right"></div></div>
+    </div>
+
+    <div class="feat">
+      <div class="text">
+        <div class="eyebrow">Simulate</div>
+        <h3>Co-design across solvers</h3>
+        <p>Combine solvers such as Optiland and Tidy3D in one notebook, and trace a design end to end instead of handing results between tools.</p>
+        <div class="res"><b>Checked:</b> Light traced from the lens to the grating: 36% reaches the waveguide</div>
+      </div>
+      <div class="pane"><div class="media"><video src="https://axiomatic-ai.github.io/product/lemma-at-a-glance/media/simulations-result.mp4" poster="https://axiomatic-ai.github.io/product/lemma-at-a-glance/media/simulations-result.jpg" muted loop playsinline preload="none"></video></div></div>
+    </div>
+
+    <div class="feat">
+      <div class="text">
+        <div class="eyebrow">Solve</div>
+        <h3>Solve a problem set</h3>
+        <p>Solve a hard problem, check the answer in code, then play with the parameters to see how it behaves.</p>
+        <div class="res"><b>Checked:</b> An exact Floquet analysis agrees to 0.05%</div>
+      </div>
+      <div class="pane"><div class="media"><video src="https://axiomatic-ai.github.io/product/lemma-at-a-glance/media/problem-set-result.mp4" poster="https://axiomatic-ai.github.io/product/lemma-at-a-glance/media/problem-set-result.jpg" muted loop playsinline preload="none"></video></div></div>
+    </div>
+
+    <div class="feat">
+      <div class="text">
+        <div class="eyebrow">Verify</div>
+        <h3>Validate a paper</h3>
+        <p>Check a paper's references, claims and equations. Derivations and numerical claims are recomputed in code, and each reference is checked against its source.</p>
+        <div class="res"><b>Checked:</b> Each issue marked where it occurs, in an annotated PDF</div>
+      </div>
+      <div class="pane"><div class="media"><video src="https://axiomatic-ai.github.io/product/lemma-at-a-glance/media/validate-result.mp4" poster="https://axiomatic-ai.github.io/product/lemma-at-a-glance/media/validate-result.jpg" muted loop playsinline preload="none"></video></div></div>
+    </div>
+
+    <div class="feat">
+      <div class="text">
+        <div class="eyebrow">Learn</div>
+        <h3>Survey the literature</h3>
+        <p>Find, read and compare the key papers on a topic, drawing on a curated knowledge graph of scientific papers plus the web. No citations to papers that do not exist.</p>
+        <div class="res"><b>Checked:</b> Every source linked, plus a BibTeX file</div>
+      </div>
+      <div class="pane"><div class="media"><video src="https://axiomatic-ai.github.io/product/lemma-at-a-glance/media/survey-result.mp4" poster="https://axiomatic-ai.github.io/product/lemma-at-a-glance/media/survey-result.jpg" muted loop playsinline preload="none"></video></div></div>
+    </div>
+
+    <div class="feat">
+      <div class="text">
+        <div class="eyebrow">Reproduce</div>
+        <h3>Digital twin of a paper</h3>
+        <p>Reproduce a paper's figures live, next to the original. Then change what the authors kept fixed and see what moves.</p>
+        <div class="res"><b>Checked:</b> The paper's Fig. 6(b) reproduced, next to the original</div>
+      </div>
+      <div class="pane"><div class="media"><video src="https://axiomatic-ai.github.io/product/lemma-at-a-glance/media/digital-twin-result.mp4" poster="https://axiomatic-ai.github.io/product/lemma-at-a-glance/media/digital-twin-result.jpg" muted loop playsinline preload="none"></video></div></div>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta">
+  <video src="https://axiomatic-ai.github.io/product/lemma-at-a-glance/media/hero-bg.mp4" poster="https://axiomatic-ai.github.io/product/lemma-at-a-glance/media/hero-bg.jpg" autoplay muted loop playsinline aria-hidden="true"></video>
+  <div class="wrap">
+    <h2 class="reveal"><span class="wordmark">Lemma:</span> the sandbox for <em class="gi">scientists.</em></h2>
+    <div class="btns reveal">
+      <a class="btn green" href="https://lemma.axiomatic.ai/r/pf2utRclWdU">Try Lemma today</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Lemma™ by Axiomatic AI · Verifiable AI for science and engineering</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
+<script>
+(function(){
+  /* videos play only while in view */
+  var vo=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){if(v.preload==='none'){v.preload='metadata';}v.play().catch(function(){});}else{v.pause();}});},{threshold:.35});
+  document.querySelectorAll('.media video').forEach(function(v){vo.observe(v);});
+
+  /* fallback reveal for sections GSAP does not own */
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -10% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+  if(!window.gsap||!window.SplitText){document.querySelector('.hero h1').style.visibility='visible';return;}
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+  var ease='power3.out';
+
+  /* smooth scroll (Lenis): wheel only, native on touch; driven by GSAP's ticker so ScrollTrigger stays in sync.
+     Remove this block to go back to native scrolling. */
+  if(window.Lenis && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var lenis=new Lenis({duration:1.1,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t));},anchors:true});
+    lenis.on('scroll',ScrollTrigger.update);
+    gsap.ticker.add(function(time){lenis.raf(time*1000);});
+    gsap.ticker.lagSmoothing(0);
+    document.documentElement.classList.add('lenis-on');
+  }
+
+  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', function(){
+    /* 1. hero entrance: wordmark, headline words, lead, buttons, video */
+    var h1=document.querySelector('.hero h1');
+    var split=SplitText.create(h1,{type:'words',wordsClass:'w'});
+    gsap.set(h1,{autoAlpha:1});
+    gsap.timeline({defaults:{ease:ease}})
+      .from(['.hero .lemma','.hero .eyebrow'],{y:24,autoAlpha:0,duration:.7,stagger:.06},0)
+      .from(split.words,{y:28,autoAlpha:0,duration:.8,stagger:.07},.08)
+      .from('.nav .nav-cta',{y:-12,autoAlpha:0,duration:.6},.5)
+      .from('.run .frame',{y:40,autoAlpha:0,duration:.9},.6);
+
+    /* 3. feature cards: text parts stagger, media slides in from its side */
+    document.querySelectorAll('.feat').forEach(function(card){
+      var text=card.querySelector('.text'), pane=card.querySelector('.pane');
+      var mediaSide=getComputedStyle(text).order==='2'?-32:32;
+      gsap.timeline({scrollTrigger:{trigger:card,start:'top 78%',once:true},defaults:{ease:ease}})
+        .from(card,{autoAlpha:0,duration:.6},0)
+        .from(text.children,{y:24,autoAlpha:0,duration:.7,stagger:.09},.1)
+        .from(pane.firstElementChild,{x:mediaSide,autoAlpha:0,duration:.8},.15);
+    });
+
+    return function(){ split.revert(); };
+  });
+})();
+</script>
+</body>
+</html>
